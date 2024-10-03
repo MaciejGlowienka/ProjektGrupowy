@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\Internal\Order\**" />
+    <Compile Remove="Controllers\Internal\Production\**" />
+    <Compile Remove="Controllers\Internal\Raport\**" />
+    <Compile Remove="Controllers\Internal\Wiki\**" />
+    <Compile Remove="Helpers\Order\**" />
+    <Compile Remove="Helpers\Production\**" />
+    <Compile Remove="Helpers\Raport\**" />
+    <Compile Remove="Helpers\Wiki\**" />
+    <Compile Remove="Helpers\Work\**" />
+    <Compile Remove="Models\Order\**" />
+    <Compile Remove="Models\Production\**" />
+    <Compile Remove="Models\Raport\**" />
+    <Compile Remove="Models\Wiki\**" />
+    <Compile Remove="Services\Order\**" />
+    <Compile Remove="Services\Production\**" />
+    <Compile Remove="Services\Raport\**" />
+    <Compile Remove="Services\Wiki\**" />
+    <Compile Remove="Services\Work\**" />
+    <Content Remove="Controllers\Internal\Order\**" />
+    <Content Remove="Controllers\Internal\Production\**" />
+    <Content Remove="Controllers\Internal\Raport\**" />
+    <Content Remove="Controllers\Internal\Wiki\**" />
+    <Content Remove="Helpers\Order\**" />
+    <Content Remove="Helpers\Production\**" />
+    <Content Remove="Helpers\Raport\**" />
+    <Content Remove="Helpers\Wiki\**" />
+    <Content Remove="Helpers\Work\**" />
+    <Content Remove="Models\Order\**" />
+    <Content Remove="Models\Production\**" />
+    <Content Remove="Models\Raport\**" />
+    <Content Remove="Models\Wiki\**" />
+    <Content Remove="Services\Order\**" />
+    <Content Remove="Services\Production\**" />
+    <Content Remove="Services\Raport\**" />
+    <Content Remove="Services\Wiki\**" />
+    <Content Remove="Services\Work\**" />
+    <EmbeddedResource Remove="Controllers\Internal\Order\**" />
+    <EmbeddedResource Remove="Controllers\Internal\Production\**" />
+    <EmbeddedResource Remove="Controllers\Internal\Raport\**" />
+    <EmbeddedResource Remove="Controllers\Internal\Wiki\**" />
+    <EmbeddedResource Remove="Helpers\Order\**" />
+    <EmbeddedResource Remove="Helpers\Production\**" />
+    <EmbeddedResource Remove="Helpers\Raport\**" />
+    <EmbeddedResource Remove="Helpers\Wiki\**" />
+    <EmbeddedResource Remove="Helpers\Work\**" />
+    <EmbeddedResource Remove="Models\Order\**" />
+    <EmbeddedResource Remove="Models\Production\**" />
+    <EmbeddedResource Remove="Models\Raport\**" />
+    <EmbeddedResource Remove="Models\Wiki\**" />
+    <EmbeddedResource Remove="Services\Order\**" />
+    <EmbeddedResource Remove="Services\Production\**" />
+    <EmbeddedResource Remove="Services\Raport\**" />
+    <EmbeddedResource Remove="Services\Wiki\**" />
+    <EmbeddedResource Remove="Services\Work\**" />
+    <None Remove="Controllers\Internal\Order\**" />
+    <None Remove="Controllers\Internal\Production\**" />
+    <None Remove="Controllers\Internal\Raport\**" />
+    <None Remove="Controllers\Internal\Wiki\**" />
+    <None Remove="Helpers\Order\**" />
+    <None Remove="Helpers\Production\**" />
+    <None Remove="Helpers\Raport\**" />
+    <None Remove="Helpers\Wiki\**" />
+    <None Remove="Helpers\Work\**" />
+    <None Remove="Models\Order\**" />
+    <None Remove="Models\Production\**" />
+    <None Remove="Models\Raport\**" />
+    <None Remove="Models\Wiki\**" />
+    <None Remove="Services\Order\**" />
+    <None Remove="Services\Production\**" />
+    <None Remove="Services\Raport\**" />
+    <None Remove="Services\Wiki\**" />
+    <None Remove="Services\Work\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+</Project>
