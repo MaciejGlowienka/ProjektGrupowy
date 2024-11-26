@@ -1,11 +1,13 @@
 ﻿using ProjektZespolowy.API.Models.Work;
 using ProjektZespolowy.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjektZespolowy.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TaskController : ControllerBase
     {
         private readonly ITaskService _taskService;
@@ -47,6 +49,9 @@ namespace ProjektZespolowy.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<KanbanTask>> CreateKanbanTask([FromBody] KanbanTask kanbanTask)
         {
+            if(kanbanTask.ID > 0) 
+                return BadRequest();
+
             var createdTask = await _taskService.CreateKanbanTaskAsync(kanbanTask);
             return CreatedAtAction(nameof(GetKanbanTaskById), new { id = createdTask.ID }, createdTask);
         }

@@ -1,4 +1,6 @@
-﻿namespace ProjektZespolowy.API.Models.Work
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ProjektZespolowy.API.Models.Work
 {
     public class KanbanTask
     {
@@ -7,5 +9,6 @@
         public string Summary { get; set; } = string.Empty;
         public int Status { get; set; }
         public DateTime DueDate { get; set; }
+        public string Username {  get; set; }
     }
 }
