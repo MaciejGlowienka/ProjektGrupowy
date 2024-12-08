@@ -1,20 +1,22 @@
-import React from 'react';
-import { logout } from '../Authorization/AuthService';
+import React, { useContext } from 'react';
+import { AuthContext } from '../Authorization/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import "./logout.css"
 
-
-const LogoutButton = ({ setIsAuthenticated }) => {
+const LogoutButton = () => {
+    const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
-      logout();
-      setIsAuthenticated(false);
-      navigate('/login'); 
+        logout();
+        navigate('/');
     };
 
     return (
-      <button onClick={handleLogout}>Wyloguj</button>
+        <button className="logout-button" onClick={handleLogout}>
+            Wyloguj
+        </button>
     );
-  };
+};
 
-  export default LogoutButton;
+export default LogoutButton;

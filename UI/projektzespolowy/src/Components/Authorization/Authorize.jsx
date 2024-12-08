@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Authorize = ({
-  component: Component, isAuthenticated, setIsAuthenticated
-}) => {
+const Authorize = ({ component: Component, isAuthenticated, setIsAuthenticated, setShowLoginModal }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,11 +10,13 @@ const Authorize = ({
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
-      navigate("/login")
+      setShowLoginModal(true);
+      navigate("/");
     }
-  }, []);
+  }, [navigate, setIsAuthenticated, setShowLoginModal]);
 
   return isAuthenticated ? <Component /> : null;
 };
 
 export default Authorize;
+

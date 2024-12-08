@@ -1,63 +1,21 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
-
-import {addData} from './api';
-
+import 'react-datepicker/dist/react-datepicker.css';
+import { addData } from './api';
 import { useNavigate } from 'react-router-dom';
-const KanbanModal = ({
-  show,
-  setShow,
-  handleClose
-}) => {
-  const [editTitle, setEditTitle] = useState([]);
-  const [editSummary, setEditSummary] = useState([]);
-  const [editStatus, setEditStatus] = useState([]);
-  const [editOwnerId, setEditOwnerId] = useState([]);
-  const [editOrderId, setEditOrderId] = useState([]);
-  const [editDueDate, setEditDueDate] = useState([]);
 
+const KanbanModal = ({ show, setShow }) => {
+  const [editTitle, setEditTitle] = useState('');
+  const [editSummary, setEditSummary] = useState('');
+  const [editStatus, setEditStatus] = useState(0);
+  const [editDueDate, setEditDueDate] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
-  const inputs = [
-    {
-      id: 1,
-      name: "Title",
-      value: editTitle,
-      setState: setEditTitle,
-    },
-    {
-      id: 2,
-      name: "Summary",
-      value: editSummary,
-      setState: setEditSummary,
-    },
-    {
-      id: 3,
-      name: "Status",
-      value: editStatus,
-      setState: setEditStatus,
-    },
-    {
-      id: 4,
-      name: "DueDate",
-      value: editDueDate,
-      setState: setEditDueDate,
-    },
-    {
-      id: 5,
-      name: "OwnerId",
-      value: editOwnerId,
-      setState: setEditOwnerId,
-    },
-    {
-      id: 6,
-      name: "OrderId",
-      value: editOrderId,
-      setState: setEditOrderId,
-    }
-  ]
+  const handleClose = () => {
+    setShow(false);
+  };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -67,8 +25,6 @@ const KanbanModal = ({
       Summary: editSummary,
       Status: editStatus,
       DueDate: editDueDate,
-      OwnerId: editOrderId,
-      OrderId: editOwnerId
     };
 
     try {
@@ -76,43 +32,78 @@ const KanbanModal = ({
       setShow(false);
       window.location.reload();
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || 'Zapisanie nie powiodło się. Spróbuj ponownie.');
+      setErrorMessage(error.response?.data?.message || 'Failed to save the task. Please try again.');
     }
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header>
-        <Modal.Title>Modify Address</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <Container>
-          {
-            inputs.map((input) => (
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title>New Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
+            <Row>
               <Col>
-                <label>{input.name}</label>
+                <label>Title</label>
                 <input
-                  key={input.id}
-                  type="text"
-                  className="form-control"
-                  placeholder={input.name}
-                  value={input.value}
-                  onChange={(e) => input.setState(e.target.value)}
+                    type="text"
+                    className="form-control"
+                    placeholder="Title"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
                 />
               </Col>
-            ))
-          }
-        </Container>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={handleClose}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={handleUpdate}>
-          Save Changes
-        </Button>
-      </Modal.Footer>
-    </Modal>
+            </Row>
+            <Row>
+              <Col>
+                <label>Summary</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Summary"
+                    value={editSummary}
+                    onChange={(e) => setEditSummary(e.target.value)}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Status</label>
+                <select
+                    className="form-control"
+                    value={editStatus}
+                    onChange={(e) => setEditStatus(parseInt(e.target.value, 10))}
+                >
+                  <option value={0}>To Do</option>
+                  <option value={1}>In Progress</option>
+                  <option value={2}>Done</option>
+                </select>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label>Due Date</label>
+                <input
+                    type="date"
+                    className="form-control"
+                    value={editDueDate ? editDueDate.toISOString().split('T')[0] : ''}
+                    onChange={(e) => setEditDueDate(new Date(e.target.value))}
+                />
+              </Col>
+            </Row>
+            {errorMessage && <p className="text-danger">{errorMessage}</p>}
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleUpdate}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
   );
 };
 

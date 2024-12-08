@@ -50,4 +50,19 @@ export const handleOnDragEnd = (result, columns, setColumns) => {
     });
   }
 
-  //************************ 
+  //************************
+
+export const handleTaskUpdated = (updatedTask, columns, setColumns) => {
+  setColumns((prevColumns) => {
+    const updatedColumns = { ...prevColumns };
+    for (const columnId in updatedColumns) {
+      const column = updatedColumns[columnId];
+      if (column.items.some((item) => item.id === updatedTask.id)) {
+        column.items = column.items.map((item) =>
+            item.id === updatedTask.id ? updatedTask : item
+        );
+      }
+    }
+    return updatedColumns;
+  });
+};

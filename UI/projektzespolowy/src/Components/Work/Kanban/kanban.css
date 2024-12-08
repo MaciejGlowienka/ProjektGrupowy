@@ -7,6 +7,7 @@
     display: flex;
     width: 100%;
     min-height: 80vh;
+    justify-content: center;
 }
 
 .tasks-list {
@@ -18,6 +19,7 @@
     border-radius: 5px;
     padding: 15px 15px;
     margin-right: 45px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .task-icons svg{
@@ -27,16 +29,17 @@
 }
 
 .task {
-  display: flex;
-  flex-direction: column;
-  background: white;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 15px;
-  min-height: 106px;
-  border-radius: 5px;
-  max-width: 311px;
-  margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    justify-content: flex-start;
+    padding: 15px;
+    min-height: 120px;
+    border-radius: 5px;
+    max-width: 311px;
+    margin-top: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
 }
 
 .task-header {
@@ -45,7 +48,7 @@
   width: 100%;
 }
 
-.task-icons {    
+.task-icons {
   margin-right: 0;
   margin-left: auto;
 }
@@ -56,7 +59,7 @@
     align-items: center;
     width: 100%;
     font-size: 12px;
-    font-weight: 400px;
+    font-weight: bold;
     color: #7d7d7d;
   }
 
@@ -67,3 +70,15 @@
     border-radius: 5px;
     align-self: flex-start;
   }
+
+.save-add-btn {
+    margin: 50px auto;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.task-overdue {
+    background-color: #ffcccc;
+    border: 1px solid #ff0000;
+}

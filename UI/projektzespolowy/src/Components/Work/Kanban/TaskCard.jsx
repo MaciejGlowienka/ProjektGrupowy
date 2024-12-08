@@ -1,59 +1,60 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import { CiEdit , CiCircleRemove, CiCircleInfo  } from "react-icons/ci";
+import { CiEdit, CiCircleRemove, CiCircleInfo } from "react-icons/ci";
+import TaskEditModal from './TaskEditModal';
 
-const TaskCard = ({ item, index }) => {
+const TaskCard = ({ item, index, onRemove, onTaskUpdated }) => {
+    const [showEditModal, setShowEditModal] = useState(false);
 
-  const handleEditClick = (id) => {
-    console.log(`edit ${id}`);
-  };
+    const handleEditClick = () => {
+        setShowEditModal(true);
+    };
 
-  const handleRemoveClick = (id) => {
-    console.log(`remove ${id}`);
-  };
+    const isOverdue = new Date(item.dueDate) < new Date();
 
-  const handleDetailClick = (id) => {
-    console.log(`detail ${id}`);
-  };
-
-  console.log(item)
-
-  return (
-    <Draggable key={item.id} draggableId={`${item.id}`} index={index}>
-      {(provided) => (
-        <div className='task'
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <div className='task-header'>
-            <p>{item.id}</p>
-              <div className='task-icons'>
-                <CiCircleInfo  onClick={() => handleDetailClick(item.id)}/>
-                <CiEdit onClick={() => handleEditClick(item.id)}/>
-                <CiCircleRemove  onClick={() => handleRemoveClick(item.id)}/>
-              </div>
-            </div>
-          <div className='task-information'>
-            <p>{item.title}</p>
-            <p>{item.ownerName}</p>
-            <p>{item.summary}</p>
-            <div className="task-information-secondary-details">
-              <p>
-                <span>
-                  {new Date(item.dueDate).toLocaleDateString('en-us', {
-                    month: 'short',
-                    day: '2-digit',
-                  })}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-    </Draggable>
-  );
+    return (
+        <>
+            <Draggable key={item.id} draggableId={`${item.id}`} index={index}>
+                {(provided) => (
+                    <div
+                        className={`task ${isOverdue ? 'task-overdue' : ''}`}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                    >
+                        <div className="task-header">
+                            <p>{item.id}</p>
+                            <div className="task-icons">
+                                <CiCircleInfo onClick={() => console.log(`Detail ${item.id}`)} />
+                                <CiEdit onClick={handleEditClick} />
+                                <CiCircleRemove onClick={() => onRemove(item.id)} />
+                            </div>
+                        </div>
+                        <div className="task-information">
+                            <p>{item.title}</p>
+                            <p>{item.summary}</p>
+                            <div className="task-information-secondary-details">
+                                <p>
+                                    <span>
+                                        {new Date(item.dueDate).toLocaleDateString('en-us', {
+                                            month: 'short',
+                                            day: '2-digit',
+                                        })}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </Draggable>
+            <TaskEditModal
+                show={showEditModal}
+                handleClose={() => setShowEditModal(false)}
+                taskId={item.id}
+                onTaskUpdated={onTaskUpdated}
+            />
+        </>
+    );
 };
 
 export default TaskCard;
