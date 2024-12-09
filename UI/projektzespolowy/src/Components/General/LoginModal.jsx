@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Authorization/AuthContext';
+import { login as loginService } from '../Authorization/AuthService'; // Importowanie funkcji logowania
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginModal = ({ show, handleClose }) => {
@@ -14,17 +15,22 @@ const LoginModal = ({ show, handleClose }) => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const token = "dummyToken";
-            sessionStorage.setItem('token', token);
-            sessionStorage.setItem('email', email);
-            setErrorMessage('');
-            login();
-            handleClose();
-            navigate('/kanban');
+            const response = await loginService({ email, password });
+            if (response.accessToken) {
+                sessionStorage.setItem('token', response.accessToken);
+                login();
+                handleClose();
+                navigate('/kanban');
+            } else {
+                throw new Error('No accessToken returned from API');
+            }
         } catch (error) {
-            setErrorMessage(error.response?.data?.message || 'Login failed. Please try again.');
+            setErrorMessage(
+                error.response?.data?.message || 'Login failed. Please try again.'
+            );
         }
     };
+
 
     return (
         <Modal show={show} onHide={handleClose} centered>
@@ -64,3 +70,4 @@ const LoginModal = ({ show, handleClose }) => {
 };
 
 export default LoginModal;
+

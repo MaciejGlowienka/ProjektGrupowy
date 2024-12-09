@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Authorize = ({ component: Component, isAuthenticated, setIsAuthenticated, setShowLoginModal }) => {
+const Authorize = ({ component: Component, isAuthenticated }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-      setShowLoginModal(true);
-      navigate("/");
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      console.log('No token found. Redirecting to home.');
+      navigate('/');
     }
-  }, [navigate, setIsAuthenticated, setShowLoginModal]);
+  }, [navigate]);
 
   return isAuthenticated ? <Component /> : null;
 };
