@@ -2,6 +2,7 @@
 using ProjektZespolowy.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using ProjektZespolowy.API.Models.Work.Dtos;
 
 namespace ProjektZespolowy.API.Controllers
 {
@@ -61,12 +62,13 @@ namespace ProjektZespolowy.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> EditKanbanTask(int id, [FromBody] KanbanTask kanbanTask)
+        public async Task<IActionResult> UpdateTask(int id, [FromBody] UpdateKanbanTaskDto updateDto)
         {
-            if (!await _taskService.EditKanbanTaskAsync(id, kanbanTask))
-                return NotFound();
 
-            return Ok();
+            var result = await _taskService.EditKanbanTaskAsync(id, updateDto);
+            if (!result) return NotFound();
+
+            return NoContent();
         }
 
         [HttpPut]

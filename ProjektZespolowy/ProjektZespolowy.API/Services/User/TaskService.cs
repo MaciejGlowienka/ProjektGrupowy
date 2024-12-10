@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ProjektZespolowy.API.Models.Work.Dtos;
 
 namespace ProjektZespolowy.API.Services
 {
@@ -59,7 +60,7 @@ namespace ProjektZespolowy.API.Services
         {
  
             var currentUsername = GetCurrentUsername();
-            Console.WriteLine(currentUsername);
+            
             
             //Went żeby sprawdzać działanie api - DO USUNIĘCIA
             //if (currentUsername == null)
@@ -86,14 +87,21 @@ namespace ProjektZespolowy.API.Services
             return kanbanTask;
         }
 
-        public async Task<bool> EditKanbanTaskAsync(int id, KanbanTask kanbanTask)
+        public async Task<bool> EditKanbanTaskAsync(int id, UpdateKanbanTaskDto updateDto)
         {
             var currentUsername = GetCurrentUsername();
 
-            if (id != kanbanTask.ID || kanbanTask.Username != currentUsername)
-                return false;
+            var existingTask = await _context.KanbanTasks.FirstOrDefaultAsync(t => t.ID == id && t.Username == currentUsername);
+            if (existingTask == null) return false;
 
-            _context.Entry(kanbanTask).State = EntityState.Modified;
+            if (!string.IsNullOrEmpty(updateDto.Title))
+                existingTask.Title = updateDto.Title;
+
+            if (!string.IsNullOrEmpty(updateDto.Summary))
+                existingTask.Summary = updateDto.Summary;
+
+            if (updateDto.DueDate.HasValue)
+                existingTask.DueDate = updateDto.DueDate.Value;
 
             try
             {
@@ -109,6 +117,7 @@ namespace ProjektZespolowy.API.Services
 
             return true;
         }
+
 
         public async Task<bool> EditKanbanTaskStatusAsync(List<KanbanTaskStatusSaveRequest> request)
         {
