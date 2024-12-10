@@ -14,11 +14,13 @@ export const AuthProvider = ({ children }) => {
 
     const login = () => {
         setIsAuthenticated(true);
+        console.log('User logged in.');
     };
 
     const logout = () => {
         sessionStorage.removeItem('token');
         setIsAuthenticated(false);
+        console.log('User logged out.');
     };
 
     return (
@@ -27,3 +29,4 @@ export const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+

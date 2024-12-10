@@ -7,8 +7,8 @@ export const register = async (userData) => {
 
 export const login = async (credentials) => {
   const response = await api.post('/login', credentials);
-  if (response.data.token) {
-    sessionStorage.setItem('token', response.data.token);
+  if (response.data.accessToken) {
+    sessionStorage.setItem('token', response.data.accessToken);
     sessionStorage.setItem('email', response.data.email);
   }
   return response.data;
